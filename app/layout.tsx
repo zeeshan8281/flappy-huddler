@@ -3,8 +3,8 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Flappy Huddler',
-  description: 'Created with Flappy Huddler',
-  generator: 'v0.dev',
+  description: '',
+  generator: '',
 }
 
 export default function RootLayout({
