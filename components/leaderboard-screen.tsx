@@ -57,20 +57,20 @@ export default function LeaderboardScreen({ onBack, onHome }: LeaderboardScreenP
         ) : leaderboard.length === 0 ? (
           <div className="text-center text-gray-500 py-8">No scores yet. Be the first to submit your score!</div>
         ) : (
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
-            <table className="min-w-[600px] divide-y divide-gray-200">
+          <div className="bg-white rounded-lg shadow-md overflow-hidden overflow-x-auto">
+            <table className="w-full min-w-[300px] divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Rank
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Name
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Score
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Date
                   </th>
                 </tr>
@@ -84,7 +84,7 @@ export default function LeaderboardScreen({ onBack, onHome }: LeaderboardScreenP
                     transition={{ delay: index * 0.1 }}
                     className={index === 0 ? "bg-yellow-50" : ""}
                   >
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 py-2 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900">
                         {index === 0 ? (
                           <span className="text-yellow-500 font-bold">🏆 1st</span>
@@ -97,13 +97,13 @@ export default function LeaderboardScreen({ onBack, onHome }: LeaderboardScreenP
                         )}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 py-2 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900">{entry.name}</div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 py-2 whitespace-nowrap">
                       <div className="text-sm text-gray-900 font-bold">{entry.score}</div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatDate(entry.date)}</td>
+                    <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-500">{formatDate(entry.date)}</td>
                   </motion.tr>
                 ))}
               </tbody>

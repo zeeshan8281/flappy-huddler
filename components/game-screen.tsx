@@ -171,8 +171,8 @@ export default function GameScreen({ character, onGameOver, playSound }: GameScr
   return (
     <div ref={gameRef} className="relative h-[500px] overflow-hidden bg-gradient-to-b from-sky-300 to-sky-100">
       {/* Score */}
-      <div className="absolute top-4 left-0 right-0 text-center">
-        <div className="text-4xl font-bold text-white drop-shadow-md">{score}</div>
+      <div className="absolute top-4 left-0 right-0 text-center z-50 px-2">
+        <div className="text-3xl sm:text-4xl font-bold text-white drop-shadow-md truncate">{score}</div>
       </div>
 
       {/* Instructional message */}
