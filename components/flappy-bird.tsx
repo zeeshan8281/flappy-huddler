@@ -23,7 +23,7 @@ export const characters: Character[] = [
     id: "yellow",
     name: "Vanguard of Latency",
     color: "yellow",
-    jumpHeight: 4,  // reduced from 8 to 5
+    jumpHeight: 4,  // reduced from 8 to 5, now reduced by 1 more
     fallSpeed: 0.5,
     moveSpeed: 5,
     size: 30,
@@ -32,7 +32,7 @@ export const characters: Character[] = [
     id: "red",
     name: "Guardian of Privacy",
     color: "red",
-    jumpHeight: 4.5,  // reduced from 7 to 4.5
+    jumpHeight: 3.5,  // reduced from 7 to 4.5, now reduced by 1 more
     fallSpeed: 0.5,
     moveSpeed: 3,
     size: 28,
@@ -41,7 +41,7 @@ export const characters: Character[] = [
     id: "blue",
     name: "Sentinel of Uptime",
     color: "blue",
-    jumpHeight: 5,  // reduced from 9 to 6
+    jumpHeight: 4,  // reduced from 9 to 6, now reduced by 1 more
     fallSpeed: 0.3,
     moveSpeed: 2,
     size: 32,
@@ -50,7 +50,7 @@ export const characters: Character[] = [
     id: "green",
     name: "General of Open Access",
     color: "green",
-    jumpHeight: 5.5,  // reduced from 7.5 to 5.5
+    jumpHeight: 4.5,  // reduced from 7.5 to 5.5, now reduced by 1 more
     fallSpeed: 0.45,
     moveSpeed: 2.5,
     size: 25,
@@ -192,7 +192,6 @@ export default function FlappyBird() {
             onSubmitScore={handleSubmitScore}
             defaultName={playerName}
             onViewLeaderboard={handleViewLeaderboard}
-            onHome={handleBackToMenu}
           />
         )}
 
@@ -200,8 +199,6 @@ export default function FlappyBird() {
       </div>
 
       <div className="mt-4 text-center text-white text-sm">
-        <p>Click or tap to make your hero jump!</p>
-        <p className="mt-1">Each Hero has unique flying abilities. - choose wisely!</p>
       </div>
     </div>
   )

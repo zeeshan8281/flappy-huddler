@@ -175,6 +175,12 @@ export default function GameScreen({ character, onGameOver, playSound }: GameScr
         <div className="text-4xl font-bold text-white drop-shadow-md">{score}</div>
       </div>
 
+      {/* Instructional message */}
+      <div className="absolute bottom-2 left-0 right-0 text-center text-white text-sm select-none pointer-events-none">
+        <p>Click or tap to make your hero jump!</p>
+        <p>Each Hero has unique flying abilities. - choose wisely!</p>
+      </div>
+
       {/* Bird */}
       <div
         className="absolute transition-transform"

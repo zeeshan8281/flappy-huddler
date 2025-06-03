@@ -57,7 +57,6 @@ export default function StartScreen({ onStart, onLeaderboard }: StartScreenProps
       <div className="mt-12 text-center text-white text-sm max-w-xs">
         <p className="mb-2 font-semibold">How to Play:</p>
         <p>Click, tap, or press space to make your Legion Hero jump and avoid obstacles!</p>
-        <p className="mt-2">Choose from 4 different Heroes with unique abilities.</p>
       </div>
     </div>
   )

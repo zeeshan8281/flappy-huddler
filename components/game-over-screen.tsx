@@ -33,7 +33,7 @@ export default function GameOverScreen({
   }
 
   return (
-    <div className="p-6 h-[500px] flex flex-col items-center justify-center">
+    <div className="p-6 h-[620px] flex flex-col items-center justify-center">
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -60,7 +60,7 @@ export default function GameOverScreen({
             <div className="mt-4 text-sm text-gray-600">High Score: {highScore}</div>
 
             <a
-              href={`https://twitter.com/intent/post?text=I%20scored%20${score}%20points%20in%20Flappy%20HUDLer!%20Can%20you%20beat%20me%3F%20%0ATry%20it%20here%3A%20%3C%3E`}
+              href={`https://twitter.com/intent/post?text=I%20scored%20${score}%20points%20in%20Flappy%20HUDLer!%20Can%20you%20beat%20me%3F%0ATry%20here%3A%20&url=https%3A%2F%2Fflappy-huddler.vercel.app%2F`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-md transition-colors"
