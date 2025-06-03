@@ -113,6 +113,15 @@ export default function GameOverScreen({
           >
             View Leaderboard
           </motion.button>
+
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-md shadow-sm transition-colors mt-2"
+            onClick={() => onRestart()}
+          >
+            Home
+          </motion.button>
         </div>
       </motion.div>
     </div>

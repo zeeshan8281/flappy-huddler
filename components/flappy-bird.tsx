@@ -192,10 +192,11 @@ export default function FlappyBird() {
             onSubmitScore={handleSubmitScore}
             defaultName={playerName}
             onViewLeaderboard={handleViewLeaderboard}
+            onHome={handleBackToMenu}
           />
         )}
 
-        {gameState === "leaderboard" && <LeaderboardScreen onBack={handleBackToMenu} />}
+        {gameState === "leaderboard" && <LeaderboardScreen onBack={handleBackToMenu} onHome={handleBackToMenu} />}
       </div>
 
       <div className="mt-4 text-center text-white text-sm">

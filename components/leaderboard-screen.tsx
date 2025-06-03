@@ -11,9 +11,10 @@ interface LeaderboardEntry {
 
 interface LeaderboardScreenProps {
   onBack: () => void
+  onHome: () => void
 }
 
-export default function LeaderboardScreen({ onBack }: LeaderboardScreenProps) {
+export default function LeaderboardScreen({ onBack, onHome }: LeaderboardScreenProps) {
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -111,7 +112,7 @@ export default function LeaderboardScreen({ onBack }: LeaderboardScreenProps) {
         )}
       </div>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center flex-col items-center gap-2">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -119,6 +120,14 @@ export default function LeaderboardScreen({ onBack }: LeaderboardScreenProps) {
           onClick={onBack}
         >
           Back to Menu
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-full shadow-md transition-colors"
+          onClick={onHome}
+        >
+          Home
         </motion.button>
       </div>
     </div>
