@@ -22,7 +22,7 @@ export default function StartScreen({ onStart, onLeaderboard }: StartScreenProps
         }}
         className="mb-8"
       >
-        <Bird color="yellow" size={60} />
+        <Bird size={60} />
       </motion.div>
 
       <motion.h1

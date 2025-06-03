@@ -191,7 +191,7 @@ export default function GameScreen({ character, onGameOver, playSound }: GameScr
       </div>
 
       {/* Debug info */}
-      <div className="absolute top-16 left-2 text-xs text-white bg-black/50 p-1 rounded">Pipes: {pipes.length}</div>
+      {/* Pipe counter removed as per user request */}
 
       {/* Pipes */}
       {pipes.map((pipe, index) => (
