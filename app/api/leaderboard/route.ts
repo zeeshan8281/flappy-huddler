@@ -17,7 +17,13 @@ export async function GET() {
   try {
     await ensureTable()
     const result = await query("SELECT name, score, date FROM leaderboard ORDER BY score DESC, date ASC LIMIT 10")
-    return NextResponse.json({ leaderboard: result.rows })
+    // Fix: Ensure the rows are properly formatted as JSON array
+    const leaderboard = result.rows.map(row => ({
+      name: row.name,
+      score: Number(row.score),
+      date: row.date.toISOString()
+    }))
+    return NextResponse.json({ leaderboard })
   } catch (error) {
     console.error("Error in GET /api/leaderboard:", error)
     return NextResponse.json({ error: "Failed to fetch leaderboard" }, { status: 500 })

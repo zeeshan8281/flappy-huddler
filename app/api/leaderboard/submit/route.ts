@@ -25,6 +25,12 @@ async function ensureTable() {
 
 export async function POST(request: Request) {
   try {
+    // Check API key in headers
+    const apiKey = request.headers.get("x-api-key")
+    if (!apiKey || apiKey !== process.env.LEADERBOARD_API_KEY) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
+
     const { name, gameData } = await request.json()
 
     if (!name || typeof name !== "string") {
