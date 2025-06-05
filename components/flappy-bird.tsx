@@ -124,13 +124,19 @@ export default function FlappyBird() {
     localStorage.setItem("flappyBirdPlayerName", name)
     setPlayerName(name)
 
+    // Prepare game data to send to server for score computation
+    // For example, send the number of pipes passed (score) as gameData
+    const gameData = {
+      pipesPassed: score,
+    }
+
     try {
-      const response = await fetch("/api/leaderboard", {
+      const response = await fetch("/api/leaderboard/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, score }),
+        body: JSON.stringify({ name, gameData }),
       })
 
       if (response.ok) {
