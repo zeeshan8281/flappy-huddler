@@ -22,7 +22,7 @@ export default function LeaderboardScreen({ onBack, onHome }: LeaderboardScreenP
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const response = await fetch("/api/leaderboard")
+        const response = await fetch("/api/leaderboard/data")
         if (!response.ok) {
           throw new Error("Failed to fetch leaderboard")
         }
