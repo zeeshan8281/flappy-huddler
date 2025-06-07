@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import CharacterSelection from "./character-selection"
 import GameScreen from "./game-screen"
 import GameOverScreen from "./game-over-screen"
@@ -56,6 +56,7 @@ export const characters: Character[] = [
     size: 25,
   },
 ]
+
 
 export default function FlappyBird() {
   const [gameState, setGameState] = useState<GameState>("start")
@@ -117,10 +118,32 @@ export default function FlappyBird() {
     setGameState("start")
   }
 
-  const handleUpdateGameData = (pipes: any[], gameWidth: number) => {
-    setPipes(pipes)
-    setGameWidth(gameWidth)
-  }
+  const handleUpdateGameData = useCallback((pipes: any[], gameWidth: number) => {
+    setPipes((prevPipes) => {
+      const pipesChanged =
+        pipes.length !== prevPipes.length ||
+        pipes.some((pipe, index) => {
+          const prevPipe = prevPipes[index]
+          return (
+            !prevPipe ||
+            pipe.x !== prevPipe.x ||
+            pipe.topHeight !== prevPipe.topHeight ||
+            pipe.passed !== prevPipe.passed
+          )
+        })
+      if (pipesChanged) {
+        return pipes
+      }
+      return prevPipes
+    })
+
+    setGameWidth((prevGameWidth) => {
+      if (gameWidth !== prevGameWidth) {
+        return gameWidth
+      }
+      return prevGameWidth
+    })
+  }, [])
 
   const handleSubmitScore = async (name: string) => {
     if (name.trim() === "") return
@@ -128,11 +151,15 @@ export default function FlappyBird() {
     localStorage.setItem("flappyBirdPlayerName", name)
     setPlayerName(name)
 
+    const pipesPassedCount = pipes.filter(pipe => pipe.passed).length
+
     const gameData = {
-      pipesPassed: score,
+      pipesPassed: pipesPassedCount,
       pipes,
       gameWidth,
     }
+
+    console.log("Submitting gameData:", gameData)
 
     try {
       const response = await fetch("/api/leaderboard/submit", {

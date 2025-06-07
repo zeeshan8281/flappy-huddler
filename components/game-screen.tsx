@@ -22,7 +22,7 @@ const PIPE_WIDTH = 60
 const PIPE_GAP = 150
 const PIPE_SPACING = 200
 
-export default function GameScreen({ character, onGameOver, playSound }: GameScreenProps) {
+export default function GameScreen({ character, onGameOver, playSound, onUpdateGameData }: GameScreenProps) {
   const [birdPosition, setBirdPosition] = useState(GAME_HEIGHT / 2)
   const [birdVelocity, setBirdVelocity] = useState(0)
   const [pipes, setPipes] = useState<Pipe[]>([])
@@ -168,6 +168,31 @@ export default function GameScreen({ character, onGameOver, playSound }: GameScr
       window.removeEventListener("keydown", keyHandler)
     }
   }, [handleJump])
+
+  const prevPipesRef = useRef<Pipe[]>([])
+  const prevGameWidthRef = useRef<number>(0)
+
+  useEffect(() => {
+    const pipesChanged =
+      pipes.length !== prevPipesRef.current.length ||
+      pipes.some((pipe, index) => {
+        const prevPipe = prevPipesRef.current[index]
+        return (
+          !prevPipe ||
+          pipe.x !== prevPipe.x ||
+          pipe.topHeight !== prevPipe.topHeight ||
+          pipe.passed !== prevPipe.passed
+        )
+      })
+
+    const gameWidthChanged = gameWidth !== prevGameWidthRef.current
+
+    if (pipesChanged || gameWidthChanged) {
+      onUpdateGameData(pipes, gameWidth)
+      prevPipesRef.current = pipes
+      prevGameWidthRef.current = gameWidth
+    }
+  }, [pipes, gameWidth, onUpdateGameData])
 
   return (
     <div ref={gameRef} className="relative h-[500px] overflow-hidden bg-gradient-to-b from-sky-300 to-sky-100">
