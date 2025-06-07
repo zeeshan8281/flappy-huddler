@@ -23,7 +23,7 @@ export const characters: Character[] = [
     id: "yellow",
     name: "Vanguard of Latency",
     color: "yellow",
-    jumpHeight: 4,  // reduced from 8 to 5, now reduced by 1 more
+    jumpHeight: 4,
     fallSpeed: 0.5,
     moveSpeed: 5,
     size: 30,
@@ -32,7 +32,7 @@ export const characters: Character[] = [
     id: "red",
     name: "Guardian of Privacy",
     color: "red",
-    jumpHeight: 3.5,  // reduced from 7 to 4.5, now reduced by 1 more
+    jumpHeight: 3.5,
     fallSpeed: 0.5,
     moveSpeed: 3,
     size: 28,
@@ -41,7 +41,7 @@ export const characters: Character[] = [
     id: "blue",
     name: "Sentinel of Uptime",
     color: "blue",
-    jumpHeight: 4,  // reduced from 9 to 6, now reduced by 1 more
+    jumpHeight: 4,
     fallSpeed: 0.3,
     moveSpeed: 2,
     size: 32,
@@ -50,7 +50,7 @@ export const characters: Character[] = [
     id: "green",
     name: "General of Open Access",
     color: "green",
-    jumpHeight: 4.5,  // reduced from 7.5 to 5.5, now reduced by 1 more
+    jumpHeight: 4.5,
     fallSpeed: 0.45,
     moveSpeed: 2.5,
     size: 25,
@@ -63,16 +63,16 @@ export default function FlappyBird() {
   const [score, setScore] = useState(0)
   const [highScore, setHighScore] = useState(0)
   const [playerName, setPlayerName] = useState("")
+  const [pipes, setPipes] = useState<any[]>([])
+  const [gameWidth, setGameWidth] = useState(0)
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
-    // Load high score from localStorage
     const savedHighScore = localStorage.getItem("flappyBirdHighScore")
     if (savedHighScore) {
       setHighScore(Number.parseInt(savedHighScore))
     }
 
-    // Load player name from localStorage
     const savedName = localStorage.getItem("flappyBirdPlayerName")
     if (savedName) {
       setPlayerName(savedName)
@@ -117,17 +117,21 @@ export default function FlappyBird() {
     setGameState("start")
   }
 
+  const handleUpdateGameData = (pipes: any[], gameWidth: number) => {
+    setPipes(pipes)
+    setGameWidth(gameWidth)
+  }
+
   const handleSubmitScore = async (name: string) => {
     if (name.trim() === "") return
 
-    // Save player name to localStorage
     localStorage.setItem("flappyBirdPlayerName", name)
     setPlayerName(name)
 
-    // Prepare game data to send to server for score computation
-    // For example, send the number of pipes passed (score) as gameData
     const gameData = {
       pipesPassed: score,
+      pipes,
+      gameWidth,
     }
 
     try {
@@ -140,7 +144,6 @@ export default function FlappyBird() {
       })
 
       if (response.ok) {
-        // After submitting, show the leaderboard
         setGameState("leaderboard")
       }
     } catch (error) {
@@ -153,7 +156,6 @@ export default function FlappyBird() {
       audioRef.current.pause()
     }
 
-    // Create a new audio element
     const audio = new Audio()
 
     switch (sound) {
@@ -187,7 +189,12 @@ export default function FlappyBird() {
         {gameState === "selection" && <CharacterSelection characters={characters} onSelect={handleCharacterSelect} />}
 
         {gameState === "playing" && selectedCharacter && (
-          <GameScreen character={selectedCharacter} onGameOver={handleGameOver} playSound={playSound} />
+          <GameScreen
+            character={selectedCharacter}
+            onGameOver={handleGameOver}
+            playSound={playSound}
+            onUpdateGameData={handleUpdateGameData}
+          />
         )}
 
         {gameState === "gameOver" && (
@@ -204,8 +211,7 @@ export default function FlappyBird() {
         {gameState === "leaderboard" && <LeaderboardScreen onBack={handleBackToMenu} onHome={handleBackToMenu} />}
       </div>
 
-      <div className="mt-4 text-center text-white text-sm">
-      </div>
+      <div className="mt-4 text-center text-white text-sm"></div>
     </div>
   )
 }

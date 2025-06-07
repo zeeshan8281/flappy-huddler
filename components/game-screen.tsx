@@ -8,6 +8,7 @@ interface GameScreenProps {
   character: Character
   onGameOver: (score: number) => void
   playSound: (sound: "jump" | "point" | "hit" | "start" | "gameover") => void
+  onUpdateGameData: (pipes: Pipe[], gameWidth: number) => void
 }
 
 interface Pipe {

@@ -3,12 +3,47 @@ import { query } from "../../../../lib/db"
 
 // Server-side function to compute score from game data
 function computeScore(gameData: any): number {
-  // Example: compute score based on number of pipes passed or other game metrics
-  // This function should be adapted to the actual game data structure
-  if (!gameData || typeof gameData.pipesPassed !== "number") {
+  // Validate gameData structure
+  if (
+    !gameData ||
+    typeof gameData.pipesPassed !== "number" ||
+    !Array.isArray(gameData.pipes) ||
+    gameData.pipes.length === 0
+  ) {
     return 0
   }
-  return gameData.pipesPassed
+
+  // The bird's fixed horizontal position (center of the screen)
+  // This should match the client-side game width / 2
+  // We assume a fixed game width of 500 (from client code GAME_HEIGHT) or can be passed in gameData
+  const birdX = gameData.gameWidth ? gameData.gameWidth / 2 : 250
+
+  // Count how many pipes have been passed based on their x position relative to birdX
+  // A pipe is considered passed if pipe.x + PIPE_WIDTH < birdX
+  const PIPE_WIDTH = 60
+
+  let validPipesPassedCount = 0
+  for (const pipe of gameData.pipes) {
+    if (
+      typeof pipe.x !== "number" ||
+      typeof pipe.topHeight !== "number" ||
+      typeof pipe.passed !== "boolean"
+    ) {
+      // Invalid pipe data
+      return 0
+    }
+    if (pipe.passed && pipe.x + PIPE_WIDTH < birdX) {
+      validPipesPassedCount++
+    }
+  }
+
+  // Check if pipesPassed matches the counted valid pipes passed
+  if (gameData.pipesPassed !== validPipesPassedCount) {
+    return 0
+  }
+
+  // Score is the number of pipes passed
+  return validPipesPassedCount
 }
 
 // Ensure the leaderboard table exists
@@ -25,12 +60,6 @@ async function ensureTable() {
 
 export async function POST(request: Request) {
   try {
-    // Check API key in headers
-    const apiKey = request.headers.get("x-api-key")
-    if (!apiKey || apiKey !== process.env.LEADERBOARD_API_KEY) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-    }
-
     const { name, gameData } = await request.json()
 
     if (!name || typeof name !== "string") {
