@@ -1,6 +1,4 @@
-import { StackHandler } from "@stackframe/stack";
-import { stackServerApp } from "../../../stack";
-
 export default function Handler(props: unknown) {
-  return <StackHandler fullPage app={stackServerApp} routeProps={props} />;
+  // Placeholder component to replace StackHandler usage
+  return <div>Stack handler placeholder</div>;
 }
