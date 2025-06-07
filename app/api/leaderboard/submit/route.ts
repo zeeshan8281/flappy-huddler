@@ -62,7 +62,7 @@ export async function POST(request: Request) {
   try {
     // Check origin header to allow only requests from flappyhudl.com
     const origin = request.headers.get("origin") || request.headers.get("referer") || ""
-    if (!origin.includes("https://www.flappyhudl.com")) {
+    if (!origin.includes("flappyhudl.com")) {
       return NextResponse.json({ error: "Forbidden: Invalid origin" }, { status: 403 })
     }
 
